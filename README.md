@@ -65,7 +65,8 @@ DLC 周水子机场 -- To PVG 浦东国际机场 T2
         print(self.flight_info_map["depAirport"], self.dep_airport_name, self.flight_info_map["depTerm"],"To",self.flight_info_map["arrAirport"], self.arr_airport_name, self.flight_info_map["arrTerm"])
         print("起飞时间:", self.flight_info_map["depTime"], "预计到达时间:", self.flight_info_map["arrTime"],"准点率:", self.on_time_rate)
 
-        if transfer:print("舱位:", self.cabin_info_map["specialType"])
+        if transfer:
+            print("舱位:", self.cabin_info_map["specialType"])
         else:
             print("舱位:", self.cabin_info_map["specialType"], "票价:", self.cabin_info_map["bestPrice"],"基建燃油:", self.flight_info_map["buildPrice"])
 
