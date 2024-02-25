@@ -50,3 +50,24 @@ proxy_info.SetProtocol("http")
 *FlightInfoGet.FlightGetter.FlightGetter* 中 SetHeaders 可以用于设置请求头
 Cookies默认持久化，可以通过将__cookies_persistence更改为False取消cookies持久化
 
+## flight_interpreter.flight_list
+返回一个存储FlightInfo类型数据的列表，可以使用FlightInfo::PrintFlightInfo()函数打印机票信息，示例：
+```
+春秋 9C6658 执飞飞机 320
+DLC 周水子机场 -- To PVG 浦东国际机场 T2
+起飞时间: 2024-02-26 20:55 预计到达时间: 2024-02-26 23:10 准点率: None
+舱位: 经济舱 票价: 620 基建燃油: 120
+是否提供餐食: False 是否中途停靠: False
+```
+使用字典获取数据（FlightInfo::PrintFlightInfo函数中的代码）：
+```
+        print(self.airline_name, self.flight_info_map["flightNo"], "执飞飞机", self.flight_info_map["flightType"])
+        print(self.flight_info_map["depAirport"], self.dep_airport_name, self.flight_info_map["depTerm"],"To",self.flight_info_map["arrAirport"], self.arr_airport_name, self.flight_info_map["arrTerm"])
+        print("起飞时间:", self.flight_info_map["depTime"], "预计到达时间:", self.flight_info_map["arrTime"],"准点率:", self.on_time_rate)
+
+        if transfer:print("舱位:", self.cabin_info_map["specialType"])
+        else:
+            print("舱位:", self.cabin_info_map["specialType"], "票价:", self.cabin_info_map["bestPrice"],"基建燃油:", self.flight_info_map["buildPrice"])
+
+        print("是否提供餐食:", self.has_food, "是否中途停靠:", self.flight_info_map["stop"] == 1)
+```
