@@ -180,8 +180,6 @@ class FlightGetter:
 
         web_content = self.__PreProcessingWebContent(web_content)
 
-        print("requset.headers", web_response.request.headers)
-
         return web_content
 
     def GetFlightJson(self):
