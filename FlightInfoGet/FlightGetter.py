@@ -135,22 +135,30 @@ class FlightGetter:
         if self.__proxy is None:
             return
 
-        proxy_protocol = "http"
-        proxy_protocol_url = "http://{}"
+        # proxy_protocol = "http"
+        # proxy_protocol_url = "http://{}"
 
         try:
             # 使用https代理
-            if self.__proxy.IsHttps():
-                proxy_protocol = self.__proxy.GetProtocol()
-                proxy_protocol_url = "https://{}".format(self.__proxy.GetIpPort())
+            # if self.__proxy.IsHttps():
+                # proxy_protocol = self.__proxy.GetProtocol()
+                # proxy_protocol_url = "https://{}".format(self.__proxy.GetIpPort())
             # 使用http代理
-            else:
-                proxy_protocol_url = proxy_protocol_url.format(self.__proxy.GetIpPort())
+            # else:
+                # proxy_protocol_url = proxy_protocol_url.format(self.__proxy.GetIpPort())
 
+            # web_response = requests.get(self.BuildFlightSearchUrl(),
+                                        # proxies={proxy_protocol: proxy_protocol_url},
+                                        # headers=self.__headers,
+                                        # cookies=self.__cookies)
+            proxy = {"http": "http://{}".format(self.__proxy.GetIpPort()),
+                     "https": "http://{}".format(self.__proxy.GetIpPort())}
+            
             web_response = requests.get(self.BuildFlightSearchUrl(),
-                                        proxies={proxy_protocol: proxy_protocol_url},
+                                        proxies=proxy,
                                         headers=self.__headers,
-                                        cookies=self.__cookies)
+                                        cookies=self.__cookies,
+                                        allow_redirects=True)
         except requests.exceptions.ProxyError:
             raise FlightException.NetworkError("Proxy or Network Error")
 
